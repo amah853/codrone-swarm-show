@@ -8,12 +8,11 @@ from typing import Any
 
 
 DEFAULT_MAX_ORIGIN_RADIUS_FT = 10.0
+REQUIRED_DRONE_COUNT = 6
+MAX_HOVER_SECONDS = 0.6
 CM_PER_FOOT = 30.48
 
 ALLOWED_METHODS = {
-    "controller_buzzer",
-    "drone_buzzer",
-    "flip",
     "hover",
     "move",
     "move_backward",
@@ -70,6 +69,9 @@ def load_show(path: str | Path) -> Show:
 
 def parse_show(data: dict[str, Any]) -> Show:
     expected_drones = _positive_int(data.get("expected_drones"), "expected_drones")
+    if expected_drones != REQUIRED_DRONE_COUNT:
+        raise ChoreographyError(f"show must use exactly {REQUIRED_DRONE_COUNT} drones")
+
     cues_data = data.get("cues")
     if not isinstance(cues_data, list) or not cues_data:
         raise ChoreographyError("show must include a non-empty cues list")
@@ -88,6 +90,7 @@ def parse_show(data: dict[str, Any]) -> Show:
         vertical_axis_only=bool(data.get("vertical_axis_only", False)),
     )
     validate_axis_policy(show)
+    validate_stability_policy(show)
     validate_projected_flight_box(show)
     return show
 
@@ -202,6 +205,18 @@ def validate_axis_policy(show: Show) -> None:
     for cue in show.cues:
         for command in cue.commands:
             _validate_vertical_axis_command(cue.name, command)
+
+
+def validate_stability_policy(show: Show) -> None:
+    for cue in show.cues:
+        for command in cue.commands:
+            if command.method == "hover":
+                duration = _number_arg(command, 0, 0.0)
+                if duration > MAX_HOVER_SECONDS:
+                    raise ChoreographyError(
+                        f"cue '{cue.name}' uses hover duration {duration:g}, "
+                        f"but CoDrone EDU swarm cues limit hover to {MAX_HOVER_SECONDS:g}s"
+                    )
 
 
 def _validate_vertical_axis_command(cue_name: str, command: Command) -> None:

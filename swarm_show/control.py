@@ -19,6 +19,8 @@ SETUP_COLORS = (
     (1, "orange", (255, 120, 0, 255)),
     (2, "yellow", (255, 230, 0, 255)),
     (3, "green", (0, 255, 80, 255)),
+    (4, "blue", (0, 120, 255, 255)),
+    (5, "purple", (170, 70, 255, 255)),
 )
 
 SETUP_DIAGRAM = """\
@@ -26,10 +28,14 @@ Setup layout, coordinate launch box, all drones facing forward:
 
                  FRONT
 
-          drone 0 RED       3-4 ft       drone 1 ORANGE
+                    drone 0 RED
+
+          drone 1 ORANGE             drone 2 YELLOW
 
 
-          drone 2 YELLOW    3-4 ft       drone 3 GREEN
+          drone 3 GREEN              drone 4 BLUE
+
+                  drone 5 PURPLE
 
                  PILOT / MACBOOK
 """
@@ -192,8 +198,14 @@ def run_show(show: Show, swarm_module: Any, options: RunOptions | None = None) -
             swarm.takeoff()
             airborne = True
 
+        current_act: str | None = None
         for cue_number, cue in enumerate(show.cues, start=1):
             _raise_if_aborted(abort_controller)
+            act = _cue_act_label(cue.name)
+            if act is not None and act != current_act:
+                current_act = act
+                print()
+                print(f"=== {act.upper()} ===")
             print(f"Running cue {cue_number}/{len(show.cues)}: {cue.name}")
             sync = build_sync(cue, show.expected_drones, swarm_module)
             swarm.run(sync, type=cue.mode)
@@ -228,6 +240,9 @@ def run_show(show: Show, swarm_module: Any, options: RunOptions | None = None) -
 
 
 def _apply_setup_colors(swarm: Any, expected_drones: int) -> None:
+    if expected_drones != len(SETUP_COLORS):
+        raise RuntimeError(f"Setup supports exactly {len(SETUP_COLORS)} drones.")
+
     print()
     print("Assigning setup colors...")
     for index, color_name, rgba in SETUP_COLORS[:expected_drones]:
@@ -259,6 +274,13 @@ def _connected_drone_count(swarm: Any) -> int:
     if hasattr(swarm, "get_drones"):
         return len(swarm.get_drones())
     raise RuntimeError("Unable to determine connected drone count from Swarm object.")
+
+
+def _cue_act_label(cue_name: str) -> str | None:
+    prefix, separator, _ = cue_name.partition(" - ")
+    if separator and prefix.lower().startswith("act "):
+        return prefix
+    return None
 
 
 def _raise_if_aborted(abort_controller: FlightAbortController) -> None:

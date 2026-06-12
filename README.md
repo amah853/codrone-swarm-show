@@ -1,6 +1,6 @@
-# CoDrone EDU Four-Drone Swarm Show
+# CoDrone EDU Six-Drone Swarm Show
 
-This is a local Python control station for a 4-drone CoDrone EDU show using Robolink's `codrone_edu.swarm` API.
+This is a local Python control station for a 6-drone CoDrone EDU show using Robolink's `codrone_edu.swarm` API.
 
 It runs from the MacBook, connects to the USB-connected CoDrone EDU controllers, runs a cue-by-cue choreography, and keeps landing and emergency-stop controls active during flight.
 
@@ -19,16 +19,20 @@ python -m pip install -e ".[dev]"
 
 1. Charge all drone batteries.
 2. Pair each drone with its own controller.
-3. Connect the four controllers to the MacBook or a powered USB hub with data-capable USB cables.
-4. Place the drones in a 2x2 coordinate launch box, 3-4 feet apart from each neighbor, all parallel and facing the same direction. After connection, the program sets both drone and controller LEDs to these setup colors:
+3. Connect the six controllers to the MacBook or a powered USB hub with data-capable USB cables.
+4. Place the drones in the marked six-drone launch layout, 3-4 feet apart from each neighbor, all parallel and facing the same direction. After connection, the program sets both drone and controller LEDs to these setup colors:
 
 ```text
                  FRONT
 
-          drone 0 RED       3-4 ft       drone 1 ORANGE
+                    drone 0 RED
+
+          drone 1 ORANGE             drone 2 YELLOW
 
 
-          drone 2 YELLOW    3-4 ft       drone 3 GREEN
+          drone 3 GREEN              drone 4 BLUE
+
+                  drone 5 PURPLE
 
                  PILOT / MACBOOK
 ```
@@ -40,15 +44,15 @@ python -m pip install -e ".[dev]"
 Dry-run mode validates and prints the show without connecting to drones:
 
 ```bash
-python -m swarm_show --show choreographies/four_drone_show.json
+python -m swarm_show --show choreographies/six_drone_show.json
 ```
 
 ## Fly
 
-This command connects the swarm, requires exactly four detected controllers, colors the drones/controllers, prints the setup diagram, prompts you to type `DONE`, starts the keyboard safety controls, then runs the choreography.
+This command connects the swarm, requires exactly six detected controllers, colors the drones/controllers, prints the setup diagram, prompts you to type `DONE`, starts the keyboard safety controls, then runs the choreography.
 
 ```bash
-python -m swarm_show --show choreographies/four_drone_show.json --arm
+python -m swarm_show --show choreographies/six_drone_show.json --arm
 ```
 
 During flight:
@@ -61,15 +65,15 @@ During flight:
 
 Emergency stop cuts the motors immediately. Prefer `L` for normal landing whenever the drones are still controllable.
 
-The show starts from that launch box, performs a synchronized backflip, uses short vertical throttle pulses, runs a timed up/down wave, does one second synchronized backflip, beeps together, then lands. Animated LED modes are avoided in the default show because each drone can run those effects slightly out of sync. The CoDrone EDU library skips flips if a drone battery is under 50%, so charge all drones before running it.
+The show takes off together, runs a startup altitude check, moves through a loose hexagon, clears center, runs a V pass-through, a synchronized wave, an LED chase, one DNA-style twist, then finishes with a lane-lift firework return and lands together. The terminal prints an act banner as each act starts. The choreography is staged as short pass-through motion instead of held geometric shapes because CoDrone EDU drones do not have formation lock. Audio, buzzer, countdown, orchestra, pixel-art holds, and flip-demo commands are not part of the supported choreography surface.
 
 ## Safety Limits
 
-The choreography includes `max_origin_radius_ft`, currently set to `10`. The loader rejects a show file if the projected relative path for any drone moves more than that far from its starting point.
+The choreography includes `max_origin_radius_ft`, currently set to `5`. The loader rejects a show file if the projected relative path for any drone moves more than that far from its starting point.
 
-The default routine intentionally uses much smaller moves than that limit. The 10 ft radius is a guardrail for future choreography edits, not a target.
+The default routine intentionally uses much smaller moves than that limit. The radius is a guardrail for future choreography edits, not a target.
 
-The default choreography sets `vertical_axis_only: true`. With that enabled, the loader rejects horizontal movement commands, heading changes, yaw/turn commands, and overly long or strong throttle pulses. The show uses `set_throttle(...)`, `move(...)`, and `reset_move_values()` for short relative vertical pulses instead of coordinate positioning.
+The default choreography uses simple relative `move_distance(...)` commands, low velocities, two-radius staging, short hover commands, and only startup plus mid-show altitude checks for camp-safe pass-through movement. The loader rejects hover commands longer than 0.6 seconds and still validates the projected flight box before a show can run.
 
 ## Crash Detection
 
@@ -82,7 +86,7 @@ If a drone's accident count increases, or if it appears severely tilted while ve
 
 ## Customize The Show
 
-Edit `choreographies/four_drone_show.json`.
+Edit `choreographies/six_drone_show.json`.
 
 Each cue has a name and commands:
 
@@ -91,12 +95,12 @@ Each cue has a name and commands:
   "name": "blue blink",
   "commands": [
     { "drone": "all", "method": "set_drone_LED_mode", "args": [0, 80, 255, "blink", 5] },
-    { "drone": "all", "method": "hover", "args": [1.0] }
+    { "drone": "all", "method": "hover", "args": [0.5] }
   ]
 }
 ```
 
-Supported methods are intentionally allow-listed in `swarm_show/choreography.py` so a show file cannot call arbitrary library methods. The current allow-list includes short vertical pulse controls, basic movement, turns, LEDs, hover, buzzer notes, and `flip`.
+Supported methods are intentionally allow-listed in `swarm_show/choreography.py` so a show file cannot call arbitrary library methods. The current allow-list includes short vertical pulse controls, basic movement, turns, LEDs, and hover. Buzzer/audio and flip commands are intentionally rejected.
 
 ## References
 

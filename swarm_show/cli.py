@@ -8,7 +8,7 @@ from .choreography import ChoreographyError, describe_show, load_show
 from .control import RunOptions, run_show
 
 
-DEFAULT_SHOW = Path("choreographies/four_drone_show.json")
+DEFAULT_SHOW = Path("choreographies/six_drone_show.json")
 
 
 def main(argv: list[str] | None = None) -> int:

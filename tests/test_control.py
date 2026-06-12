@@ -1,4 +1,4 @@
-from swarm_show.control import FlightAbortController, _apply_setup_colors
+from swarm_show.control import FlightAbortController, _apply_setup_colors, _cue_act_label
 
 
 class FakeSwarm:
@@ -17,7 +17,7 @@ class FakeSwarm:
 
 def test_landing_request_uses_land_not_emergency_stop():
     swarm = FakeSwarm()
-    controller = FlightAbortController(swarm, expected_drones=4)
+    controller = FlightAbortController(swarm, expected_drones=6)
 
     controller.request_landing("test")
 
@@ -28,7 +28,7 @@ def test_landing_request_uses_land_not_emergency_stop():
 
 def test_emergency_request_uses_emergency_stop():
     swarm = FakeSwarm()
-    controller = FlightAbortController(swarm, expected_drones=4)
+    controller = FlightAbortController(swarm, expected_drones=6)
 
     controller.trigger_emergency_stop("test")
 
@@ -39,7 +39,7 @@ def test_emergency_request_uses_emergency_stop():
 def test_setup_colors_match_physical_layout():
     swarm = FakeSwarm()
 
-    _apply_setup_colors(swarm, expected_drones=4)
+    _apply_setup_colors(swarm, expected_drones=6)
 
     assert swarm.calls == [
         ("run_drone", 0, "set_drone_LED", (255, 0, 0, 255)),
@@ -50,4 +50,13 @@ def test_setup_colors_match_physical_layout():
         ("run_drone", 2, "set_controller_LED", (255, 230, 0, 255)),
         ("run_drone", 3, "set_drone_LED", (0, 255, 80, 255)),
         ("run_drone", 3, "set_controller_LED", (0, 255, 80, 255)),
+        ("run_drone", 4, "set_drone_LED", (0, 120, 255, 255)),
+        ("run_drone", 4, "set_controller_LED", (0, 120, 255, 255)),
+        ("run_drone", 5, "set_drone_LED", (170, 70, 255, 255)),
+        ("run_drone", 5, "set_controller_LED", (170, 70, 255, 255)),
     ]
+
+
+def test_cue_act_label_parses_act_prefix():
+    assert _cue_act_label("act 2 - wave beat 1") == "act 2"
+    assert _cue_act_label("firework flash") is None

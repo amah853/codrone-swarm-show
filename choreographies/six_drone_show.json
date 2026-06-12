@@ -1,0 +1,1756 @@
+{
+  "title": "Six CoDrone EDU Stable Pass-Through Show",
+  "expected_drones": 6,
+  "max_origin_radius_ft": 5,
+  "vertical_axis_only": false,
+  "takeoff": true,
+  "land_on_finish": true,
+  "cues": [
+    {
+      "name": "act 1 - launch led sync",
+      "commands": [
+        {
+          "drone": 0,
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            0,
+            0,
+            255
+          ]
+        },
+        {
+          "drone": 1,
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            120,
+            0,
+            255
+          ]
+        },
+        {
+          "drone": 2,
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            230,
+            0,
+            255
+          ]
+        },
+        {
+          "drone": 3,
+          "method": "set_drone_LED",
+          "args": [
+            0,
+            255,
+            80,
+            255
+          ]
+        },
+        {
+          "drone": 4,
+          "method": "set_drone_LED",
+          "args": [
+            0,
+            120,
+            255,
+            255
+          ]
+        },
+        {
+          "drone": 5,
+          "method": "set_drone_LED",
+          "args": [
+            170,
+            70,
+            255,
+            255
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.35
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 1 - startup altitude check up",
+      "commands": [
+        {
+          "drone": "all",
+          "method": "move_distance",
+          "args": [
+            0,
+            0,
+            0.1,
+            0.35
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.14
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 1 - startup altitude check down",
+      "commands": [
+        {
+          "drone": "all",
+          "method": "move_distance",
+          "args": [
+            0,
+            0,
+            -0.1,
+            0.35
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.2
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 1 - hexagon pass-through outward",
+      "commands": [
+        {
+          "drone": 0,
+          "method": "move_distance",
+          "args": [
+            0,
+            0.7,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 1,
+          "method": "move_distance",
+          "args": [
+            0.61,
+            0.35,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 2,
+          "method": "move_distance",
+          "args": [
+            0.61,
+            -0.35,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 3,
+          "method": "move_distance",
+          "args": [
+            0,
+            -0.7,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 4,
+          "method": "move_distance",
+          "args": [
+            -0.61,
+            -0.35,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 5,
+          "method": "move_distance",
+          "args": [
+            -0.61,
+            0.35,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "set_drone_LED",
+          "args": [
+            0,
+            180,
+            255,
+            255
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.22
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 1 - pass-through return center",
+      "commands": [
+        {
+          "drone": 0,
+          "method": "move_distance",
+          "args": [
+            0,
+            -0.7,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 1,
+          "method": "move_distance",
+          "args": [
+            -0.61,
+            -0.35,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 2,
+          "method": "move_distance",
+          "args": [
+            -0.61,
+            0.35,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 3,
+          "method": "move_distance",
+          "args": [
+            0,
+            0.7,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 4,
+          "method": "move_distance",
+          "args": [
+            0.61,
+            0.35,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 5,
+          "method": "move_distance",
+          "args": [
+            0.61,
+            -0.35,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.22
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 2 - v pass-through",
+      "commands": [
+        {
+          "drone": 0,
+          "method": "move_distance",
+          "args": [
+            0,
+            0.7,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 1,
+          "method": "move_distance",
+          "args": [
+            -0.35,
+            0.35,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 2,
+          "method": "move_distance",
+          "args": [
+            0.35,
+            0.35,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 3,
+          "method": "move_distance",
+          "args": [
+            -0.7,
+            0,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 4,
+          "method": "move_distance",
+          "args": [
+            0.7,
+            0,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 5,
+          "method": "move_distance",
+          "args": [
+            0,
+            -0.35,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.22
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 2 - v forward pulse",
+      "commands": [
+        {
+          "drone": "all",
+          "method": "move_distance",
+          "args": [
+            0,
+            0.35,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "set_drone_LED",
+          "args": [
+            0,
+            255,
+            80,
+            255
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.18
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 2 - v back pulse",
+      "commands": [
+        {
+          "drone": "all",
+          "method": "move_distance",
+          "args": [
+            0,
+            -0.35,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.18
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 2 - v clear center",
+      "commands": [
+        {
+          "drone": 0,
+          "method": "move_distance",
+          "args": [
+            0,
+            -0.7,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 1,
+          "method": "move_distance",
+          "args": [
+            0.35,
+            -0.35,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 2,
+          "method": "move_distance",
+          "args": [
+            -0.35,
+            -0.35,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 3,
+          "method": "move_distance",
+          "args": [
+            0.7,
+            0,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 4,
+          "method": "move_distance",
+          "args": [
+            -0.7,
+            0,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 5,
+          "method": "move_distance",
+          "args": [
+            0,
+            0.35,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.22
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 2 - wave beat 1",
+      "commands": [
+        {
+          "drone": 0,
+          "method": "move_distance",
+          "args": [
+            0,
+            0,
+            0.16,
+            0.32
+          ]
+        },
+        {
+          "drone": 0,
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            230,
+            0,
+            255
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.18
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 2 - wave beat 2",
+      "commands": [
+        {
+          "drone": 1,
+          "method": "move_distance",
+          "args": [
+            0,
+            0,
+            0.16,
+            0.32
+          ]
+        },
+        {
+          "drone": 1,
+          "method": "set_drone_LED",
+          "args": [
+            0,
+            255,
+            80,
+            255
+          ]
+        },
+        {
+          "drone": 0,
+          "method": "move_distance",
+          "args": [
+            0,
+            0,
+            -0.16,
+            0.32
+          ]
+        },
+        {
+          "drone": 0,
+          "method": "set_drone_LED",
+          "args": [
+            170,
+            70,
+            255,
+            255
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.18
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 2 - wave beat 3",
+      "commands": [
+        {
+          "drone": 2,
+          "method": "move_distance",
+          "args": [
+            0,
+            0,
+            0.16,
+            0.32
+          ]
+        },
+        {
+          "drone": 2,
+          "method": "set_drone_LED",
+          "args": [
+            0,
+            120,
+            255,
+            255
+          ]
+        },
+        {
+          "drone": 1,
+          "method": "move_distance",
+          "args": [
+            0,
+            0,
+            -0.16,
+            0.32
+          ]
+        },
+        {
+          "drone": 1,
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            0,
+            0,
+            255
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.18
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 2 - wave beat 4",
+      "commands": [
+        {
+          "drone": 3,
+          "method": "move_distance",
+          "args": [
+            0,
+            0,
+            0.16,
+            0.32
+          ]
+        },
+        {
+          "drone": 3,
+          "method": "set_drone_LED",
+          "args": [
+            170,
+            70,
+            255,
+            255
+          ]
+        },
+        {
+          "drone": 2,
+          "method": "move_distance",
+          "args": [
+            0,
+            0,
+            -0.16,
+            0.32
+          ]
+        },
+        {
+          "drone": 2,
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            120,
+            0,
+            255
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.18
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 2 - wave beat 5",
+      "commands": [
+        {
+          "drone": 4,
+          "method": "move_distance",
+          "args": [
+            0,
+            0,
+            0.16,
+            0.32
+          ]
+        },
+        {
+          "drone": 4,
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            0,
+            0,
+            255
+          ]
+        },
+        {
+          "drone": 3,
+          "method": "move_distance",
+          "args": [
+            0,
+            0,
+            -0.16,
+            0.32
+          ]
+        },
+        {
+          "drone": 3,
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            230,
+            0,
+            255
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.18
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 2 - wave beat 6",
+      "commands": [
+        {
+          "drone": 5,
+          "method": "move_distance",
+          "args": [
+            0,
+            0,
+            0.16,
+            0.32
+          ]
+        },
+        {
+          "drone": 5,
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            120,
+            0,
+            255
+          ]
+        },
+        {
+          "drone": 4,
+          "method": "move_distance",
+          "args": [
+            0,
+            0,
+            -0.16,
+            0.32
+          ]
+        },
+        {
+          "drone": 4,
+          "method": "set_drone_LED",
+          "args": [
+            0,
+            255,
+            80,
+            255
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.18
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 2 - wave beat 7",
+      "commands": [
+        {
+          "drone": 5,
+          "method": "move_distance",
+          "args": [
+            0,
+            0,
+            -0.16,
+            0.32
+          ]
+        },
+        {
+          "drone": 5,
+          "method": "set_drone_LED",
+          "args": [
+            0,
+            120,
+            255,
+            255
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.18
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 2 - color chase beat 1",
+      "commands": [
+        {
+          "drone": 0,
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            120,
+            0,
+            255
+          ]
+        },
+        {
+          "drone": 1,
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            230,
+            0,
+            255
+          ]
+        },
+        {
+          "drone": 2,
+          "method": "set_drone_LED",
+          "args": [
+            0,
+            255,
+            80,
+            255
+          ]
+        },
+        {
+          "drone": 3,
+          "method": "set_drone_LED",
+          "args": [
+            0,
+            120,
+            255,
+            255
+          ]
+        },
+        {
+          "drone": 4,
+          "method": "set_drone_LED",
+          "args": [
+            170,
+            70,
+            255,
+            255
+          ]
+        },
+        {
+          "drone": 5,
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            0,
+            0,
+            255
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.18
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 2 - color chase beat 2",
+      "commands": [
+        {
+          "drone": 0,
+          "method": "set_drone_LED",
+          "args": [
+            0,
+            255,
+            80,
+            255
+          ]
+        },
+        {
+          "drone": 1,
+          "method": "set_drone_LED",
+          "args": [
+            0,
+            120,
+            255,
+            255
+          ]
+        },
+        {
+          "drone": 2,
+          "method": "set_drone_LED",
+          "args": [
+            170,
+            70,
+            255,
+            255
+          ]
+        },
+        {
+          "drone": 3,
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            0,
+            0,
+            255
+          ]
+        },
+        {
+          "drone": 4,
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            120,
+            0,
+            255
+          ]
+        },
+        {
+          "drone": 5,
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            230,
+            0,
+            255
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.18
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 2 - color chase beat 3",
+      "commands": [
+        {
+          "drone": 0,
+          "method": "set_drone_LED",
+          "args": [
+            170,
+            70,
+            255,
+            255
+          ]
+        },
+        {
+          "drone": 1,
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            0,
+            0,
+            255
+          ]
+        },
+        {
+          "drone": 2,
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            120,
+            0,
+            255
+          ]
+        },
+        {
+          "drone": 3,
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            230,
+            0,
+            255
+          ]
+        },
+        {
+          "drone": 4,
+          "method": "set_drone_LED",
+          "args": [
+            0,
+            255,
+            80,
+            255
+          ]
+        },
+        {
+          "drone": 5,
+          "method": "set_drone_LED",
+          "args": [
+            0,
+            120,
+            255,
+            255
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.18
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 2 reset beat - led reset",
+      "commands": [
+        {
+          "drone": "all",
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.25
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 2 reset beat - altitude check up",
+      "commands": [
+        {
+          "drone": "all",
+          "method": "move_distance",
+          "args": [
+            0,
+            0,
+            0.1,
+            0.35
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.16
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 2 reset beat - altitude check down",
+      "commands": [
+        {
+          "drone": "all",
+          "method": "move_distance",
+          "args": [
+            0,
+            0,
+            -0.1,
+            0.35
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.22
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 3 - dna split pass",
+      "commands": [
+        {
+          "drone": 0,
+          "method": "move_distance",
+          "args": [
+            -0.35,
+            0.35,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 1,
+          "method": "move_distance",
+          "args": [
+            -0.35,
+            0,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 2,
+          "method": "move_distance",
+          "args": [
+            -0.35,
+            -0.35,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 3,
+          "method": "move_distance",
+          "args": [
+            0.35,
+            0.35,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 4,
+          "method": "move_distance",
+          "args": [
+            0.35,
+            0,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 5,
+          "method": "move_distance",
+          "args": [
+            0.35,
+            -0.35,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            60,
+            160,
+            255
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.22
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 3 - dna twist cross",
+      "commands": [
+        {
+          "drone": 0,
+          "method": "move_distance",
+          "args": [
+            0.7,
+            0,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 1,
+          "method": "move_distance",
+          "args": [
+            0.7,
+            0,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 2,
+          "method": "move_distance",
+          "args": [
+            0.7,
+            0,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 3,
+          "method": "move_distance",
+          "args": [
+            -0.7,
+            0,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 4,
+          "method": "move_distance",
+          "args": [
+            -0.7,
+            0,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 5,
+          "method": "move_distance",
+          "args": [
+            -0.7,
+            0,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "set_drone_LED",
+          "args": [
+            0,
+            180,
+            255,
+            255
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.18
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 3 - dna twist return",
+      "commands": [
+        {
+          "drone": 0,
+          "method": "move_distance",
+          "args": [
+            -0.7,
+            0,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 1,
+          "method": "move_distance",
+          "args": [
+            -0.7,
+            0,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 2,
+          "method": "move_distance",
+          "args": [
+            -0.7,
+            0,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 3,
+          "method": "move_distance",
+          "args": [
+            0.7,
+            0,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 4,
+          "method": "move_distance",
+          "args": [
+            0.7,
+            0,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 5,
+          "method": "move_distance",
+          "args": [
+            0.7,
+            0,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            60,
+            160,
+            255
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.18
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 3 - dna clear center",
+      "commands": [
+        {
+          "drone": 0,
+          "method": "move_distance",
+          "args": [
+            0.35,
+            -0.35,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 1,
+          "method": "move_distance",
+          "args": [
+            0.35,
+            0,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 2,
+          "method": "move_distance",
+          "args": [
+            0.35,
+            0.35,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 3,
+          "method": "move_distance",
+          "args": [
+            -0.35,
+            -0.35,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 4,
+          "method": "move_distance",
+          "args": [
+            -0.35,
+            0,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 5,
+          "method": "move_distance",
+          "args": [
+            -0.35,
+            0.35,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.22
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 4 - firework burst",
+      "commands": [
+        {
+          "drone": 0,
+          "method": "move_distance",
+          "args": [
+            -0.7,
+            0.7,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 1,
+          "method": "move_distance",
+          "args": [
+            0.7,
+            0.7,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 2,
+          "method": "move_distance",
+          "args": [
+            -0.7,
+            0,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 3,
+          "method": "move_distance",
+          "args": [
+            0.7,
+            0,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 4,
+          "method": "move_distance",
+          "args": [
+            -0.7,
+            -0.7,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 5,
+          "method": "move_distance",
+          "args": [
+            0.7,
+            -0.7,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.18
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 4 - firework return lane lift",
+      "commands": [
+        {
+          "drone": 0,
+          "method": "move_distance",
+          "args": [
+            0,
+            0,
+            0.08,
+            0.35
+          ]
+        },
+        {
+          "drone": 2,
+          "method": "move_distance",
+          "args": [
+            0,
+            0,
+            0.08,
+            0.35
+          ]
+        },
+        {
+          "drone": 4,
+          "method": "move_distance",
+          "args": [
+            0,
+            0,
+            0.08,
+            0.35
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.16
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 4 - firework flash white",
+      "commands": [
+        {
+          "drone": "all",
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.14
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 4 - firework flash red",
+      "commands": [
+        {
+          "drone": "all",
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            0,
+            0,
+            255
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.14
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 4 - firework flash yellow",
+      "commands": [
+        {
+          "drone": "all",
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            230,
+            0,
+            255
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.14
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 4 - firework flash blue",
+      "commands": [
+        {
+          "drone": "all",
+          "method": "set_drone_LED",
+          "args": [
+            0,
+            120,
+            255,
+            255
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.14
+          ]
+        }
+      ]
+    },
+    {
+      "name": "act 4 - firework return center",
+      "commands": [
+        {
+          "drone": 0,
+          "method": "move_distance",
+          "args": [
+            0.7,
+            -0.7,
+            -0.08,
+            0.35
+          ]
+        },
+        {
+          "drone": 1,
+          "method": "move_distance",
+          "args": [
+            -0.7,
+            -0.7,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 2,
+          "method": "move_distance",
+          "args": [
+            0.7,
+            0,
+            -0.08,
+            0.35
+          ]
+        },
+        {
+          "drone": 3,
+          "method": "move_distance",
+          "args": [
+            -0.7,
+            0,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": 4,
+          "method": "move_distance",
+          "args": [
+            0.7,
+            0.7,
+            -0.08,
+            0.35
+          ]
+        },
+        {
+          "drone": 5,
+          "method": "move_distance",
+          "args": [
+            -0.7,
+            0.7,
+            0,
+            0.35
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "set_drone_LED",
+          "args": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "drone": "all",
+          "method": "hover",
+          "args": [
+            0.3
+          ]
+        }
+      ]
+    }
+  ]
+}

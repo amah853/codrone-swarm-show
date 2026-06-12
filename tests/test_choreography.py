@@ -26,12 +26,12 @@ def test_parse_valid_show_and_expand_all_command():
     show = parse_show(
         {
             "title": "Test",
-            "expected_drones": 4,
+            "expected_drones": 6,
             "cues": [
                 {
                     "name": "blink",
                     "commands": [
-                        {"drone": "all", "method": "hover", "args": [1.0]},
+                        {"drone": "all", "method": "hover", "args": [0.5]},
                         {"drone": 2, "method": "turn_left", "args": [90]},
                     ],
                 }
@@ -41,9 +41,9 @@ def test_parse_valid_show_and_expand_all_command():
 
     sync = build_sync(show.cues[0], show.expected_drones, FakeSwarmModule)
 
-    assert [sequence.index for sequence in sync.sequences] == [0, 1, 2, 3]
-    assert sync.sequences[0].commands == [("hover", (1.0,), {})]
-    assert sync.sequences[2].commands == [("hover", (1.0,), {}), ("turn_left", (90,), {})]
+    assert [sequence.index for sequence in sync.sequences] == [0, 1, 2, 3, 4, 5]
+    assert sync.sequences[0].commands == [("hover", (0.5,), {})]
+    assert sync.sequences[2].commands == [("hover", (0.5,), {}), ("turn_left", (90,), {})]
 
 
 def test_rejects_arbitrary_method():
@@ -51,7 +51,7 @@ def test_rejects_arbitrary_method():
         parse_show(
             {
                 "title": "Bad",
-                "expected_drones": 4,
+                "expected_drones": 6,
                 "cues": [
                     {
                         "name": "bad",
@@ -67,11 +67,27 @@ def test_rejects_out_of_range_drone_index():
         parse_show(
             {
                 "title": "Bad",
-                "expected_drones": 4,
+                "expected_drones": 6,
                 "cues": [
                     {
                         "name": "bad",
-                        "commands": [{"drone": 4, "method": "hover", "args": [1]}],
+                        "commands": [{"drone": 6, "method": "hover", "args": [1]}],
+                    }
+                ],
+            }
+        )
+
+
+def test_rejects_non_six_drone_show():
+    with pytest.raises(ChoreographyError, match="exactly 6 drones"):
+        parse_show(
+            {
+                "title": "Bad count",
+                "expected_drones": 5,
+                "cues": [
+                    {
+                        "name": "hover",
+                        "commands": [{"drone": "all", "method": "hover", "args": [1]}],
                     }
                 ],
             }
@@ -83,7 +99,7 @@ def test_rejects_projected_path_outside_flight_box():
         parse_show(
             {
                 "title": "Too wide",
-                "expected_drones": 4,
+                "expected_drones": 6,
                 "max_origin_radius_ft": 1,
                 "cues": [
                     {
@@ -95,30 +111,43 @@ def test_rejects_projected_path_outside_flight_box():
         )
 
 
-def test_allows_flip_commands():
-    show = parse_show(
-        {
-            "title": "Flip",
-            "expected_drones": 4,
-            "cues": [
-                {
-                    "name": "flip",
-                    "commands": [{"drone": "all", "method": "flip", "args": ["back"]}],
-                }
-            ],
-        }
-    )
-
-    sync = build_sync(show.cues[0], show.expected_drones, FakeSwarmModule)
-
-    assert sync.sequences[0].commands == [("flip", ("back",), {})]
+def test_rejects_long_hover_commands():
+    with pytest.raises(ChoreographyError, match="limit hover"):
+        parse_show(
+            {
+                "title": "Too much drift",
+                "expected_drones": 6,
+                "cues": [
+                    {
+                        "name": "long hover",
+                        "commands": [{"drone": "all", "method": "hover", "args": [1.0]}],
+                    }
+                ],
+            }
+        )
 
 
-def test_allows_vertical_pulse_and_buzzer_commands():
+def test_rejects_old_flip_demo_commands():
+    with pytest.raises(ChoreographyError, match="not allowed"):
+        parse_show(
+            {
+                "title": "Flip",
+                "expected_drones": 6,
+                "cues": [
+                    {
+                        "name": "flip",
+                        "commands": [{"drone": "all", "method": "flip", "args": ["back"]}],
+                    }
+                ],
+            }
+        )
+
+
+def test_allows_vertical_pulse_commands():
     show = parse_show(
         {
             "title": "Vertical pulse",
-            "expected_drones": 4,
+            "expected_drones": 6,
             "vertical_axis_only": True,
             "cues": [
                 {
@@ -127,7 +156,6 @@ def test_allows_vertical_pulse_and_buzzer_commands():
                         {"drone": "all", "method": "set_throttle", "args": [30]},
                         {"drone": "all", "method": "move", "args": [0.25]},
                         {"drone": "all", "method": "reset_move_values", "args": []},
-                        {"drone": "all", "method": "controller_buzzer", "args": [784, 120]},
                     ],
                 }
             ],
@@ -140,8 +168,23 @@ def test_allows_vertical_pulse_and_buzzer_commands():
         ("set_throttle", (30,), {}),
         ("move", (0.25,), {}),
         ("reset_move_values", (), {}),
-        ("controller_buzzer", (784, 120), {}),
     ]
+
+
+def test_rejects_buzzer_commands():
+    with pytest.raises(ChoreographyError, match="not allowed"):
+        parse_show(
+            {
+                "title": "No audio",
+                "expected_drones": 6,
+                "cues": [
+                    {
+                        "name": "buzzer",
+                        "commands": [{"drone": "all", "method": "controller_buzzer", "args": [784, 120]}],
+                    }
+                ],
+            }
+        )
 
 
 def test_rejects_coordinate_commands():
@@ -149,7 +192,7 @@ def test_rejects_coordinate_commands():
         parse_show(
             {
                 "title": "Coordinates",
-                "expected_drones": 4,
+                "expected_drones": 6,
                 "cues": [
                     {
                         "name": "coords",
@@ -166,11 +209,11 @@ def test_rejects_coordinate_commands():
         )
 
 
-def test_vertical_axis_only_allows_throttle_pulses_and_flips():
+def test_vertical_axis_only_allows_throttle_pulses():
     show = parse_show(
         {
             "title": "Vertical",
-            "expected_drones": 4,
+            "expected_drones": 6,
             "vertical_axis_only": True,
             "cues": [
                 {
@@ -179,7 +222,6 @@ def test_vertical_axis_only_allows_throttle_pulses_and_flips():
                         {"drone": "all", "method": "set_throttle", "args": [-25]},
                         {"drone": "all", "method": "move", "args": [0.2]},
                         {"drone": "all", "method": "reset_move_values", "args": []},
-                        {"drone": 0, "method": "flip", "args": ["left"]},
                     ],
                 }
             ],
@@ -192,7 +234,6 @@ def test_vertical_axis_only_allows_throttle_pulses_and_flips():
         ("set_throttle", (-25,), {}),
         ("move", (0.2,), {}),
         ("reset_move_values", (), {}),
-        ("flip", ("left",), {}),
     ]
 
 
@@ -201,7 +242,7 @@ def test_vertical_axis_only_rejects_large_throttle_pulse():
         parse_show(
             {
                 "title": "Bad vertical",
-                "expected_drones": 4,
+                "expected_drones": 6,
                 "vertical_axis_only": True,
                 "cues": [
                     {
@@ -218,7 +259,7 @@ def test_vertical_axis_only_rejects_long_move_pulse():
         parse_show(
             {
                 "title": "Bad vertical",
-                "expected_drones": 4,
+                "expected_drones": 6,
                 "vertical_axis_only": True,
                 "cues": [
                     {
@@ -235,7 +276,7 @@ def test_vertical_axis_only_rejects_horizontal_movement_commands():
         parse_show(
             {
                 "title": "Bad vertical",
-                "expected_drones": 4,
+                "expected_drones": 6,
                 "vertical_axis_only": True,
                 "cues": [
                     {
