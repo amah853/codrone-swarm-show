@@ -65,7 +65,7 @@ During flight:
 
 Emergency stop cuts the motors immediately. Prefer `L` for normal landing whenever the drones are still controllable.
 
-The show takes off together, runs a startup altitude check, moves through a loose hexagon, clears center, runs a V pass-through, a synchronized wave, an LED chase, one DNA-style twist, then finishes with a lane-lift firework return and lands together. The terminal prints an act banner as each act starts. The choreography is staged as short pass-through motion instead of held geometric shapes because CoDrone EDU drones do not have formation lock. Audio, buzzer, countdown, orchestra, pixel-art holds, and flip-demo commands are not part of the supported choreography surface.
+The show takes off together, hits faster hex and V pass-throughs, runs a synchronized throttle-pulse wave, fires synchronized LED flashes, performs mirrored stunt flips, runs one quick DNA-style twist, then finishes with a pair-staggered firework return and lands together. The terminal prints an act banner as each act starts. The choreography is staged as short pass-through motion instead of held geometric shapes because CoDrone EDU drones do not have formation lock. Audio, buzzer, countdown, orchestra, and pixel-art holds are not part of the supported choreography surface.
 
 ## Safety Limits
 
@@ -73,16 +73,16 @@ The choreography includes `max_origin_radius_ft`, currently set to `5`. The load
 
 The default routine intentionally uses much smaller moves than that limit. The radius is a guardrail for future choreography edits, not a target.
 
-The default choreography uses simple relative `move_distance(...)` commands, low velocities, two-radius staging, short hover commands, and only startup plus mid-show altitude checks for camp-safe pass-through movement. The loader rejects hover commands longer than 0.6 seconds and still validates the projected flight box before a show can run.
+The default choreography uses faster horizontal `move_distance(...)` commands, two-radius staging, short hover commands, throttle pulses for vertical wave motion, and explicit `front`/`back`/`left`/`right` flip commands. The loader rejects hover commands longer than 0.6 seconds, rejects non-zero Z values in `move_distance(...)`, and still validates the projected flight box before a show can run.
 
-## Crash Detection
+Flips need more room and battery than normal movement. Use this show only with charged batteries and a clear overhead area; the CoDrone EDU library may skip flips when batteries are low.
 
-The public CoDrone EDU Python API does not provide one direct "crash callback." This controller uses the available signals:
+## Flight Supervision
 
-- `get_accident_count()` before and during the show.
-- `get_angle_x()`, `get_angle_y()`, and `get_bottom_range()` between cues.
+This controller does not poll drone accident or tilt sensors during the show. Keep direct visual supervision active and use the terminal controls for intervention:
 
-If a drone's accident count increases, or if it appears severely tilted while very low to the ground after a cue, the controller sends `land()` to the full swarm. This is best-effort and cue-boundary based, so keep using the keyboard controls and visual supervision.
+- Press `L` for a normal landing.
+- Press `E`, `Enter`, `STOP`, or `Ctrl-C` for emergency stop.
 
 ## Customize The Show
 
@@ -100,10 +100,10 @@ Each cue has a name and commands:
 }
 ```
 
-Supported methods are intentionally allow-listed in `swarm_show/choreography.py` so a show file cannot call arbitrary library methods. The current allow-list includes short vertical pulse controls, basic movement, turns, LEDs, and hover. Buzzer/audio and flip commands are intentionally rejected.
+Supported methods are intentionally allow-listed in `swarm_show/choreography.py` so a show file cannot call arbitrary library methods. The current allow-list includes short vertical pulse controls, basic movement, turns, LEDs, hover, and explicit flip directions. Buzzer/audio commands are intentionally rejected.
 
 ## References
 
 - Robolink Swarm Function Documentation: `Swarm`, `connect`, `Sequence`, `Sync`, and `run`.
-- Robolink Drone Function Documentation: `takeoff`, `land`, `hover`, movement commands, LEDs, `get_accident_count`, sensor functions, and `emergency_stop`.
+- Robolink Drone Function Documentation: `takeoff`, `land`, `hover`, movement commands, LEDs, and `emergency_stop`.
 - CoDrone EDU manual safety notes: indoor use, spacing, line-of-sight, normal landing as safest stop, emergency stop only when needed.

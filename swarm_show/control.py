@@ -48,7 +48,7 @@ class RunOptions:
 
 
 class GracefulLandingRequested(RuntimeError):
-    """Raised when the operator or crash monitor has already requested landing."""
+    """Raised when the operator has already requested landing."""
 
 
 class FlightAbortController:
@@ -168,7 +168,6 @@ def run_show(show: Show, swarm_module: Any, options: RunOptions | None = None) -
     abort_controller: FlightAbortController | None = None
     airborne = False
     previous_sigint_handler = signal.getsignal(signal.SIGINT)
-    crash_baseline: list[int | None] = []
 
     try:
         print("Connecting to CoDrone EDU controllers...")
@@ -182,7 +181,6 @@ def run_show(show: Show, swarm_module: Any, options: RunOptions | None = None) -
         if options.require_confirmation:
             _confirm_setup(show)
 
-        crash_baseline = _read_accident_counts(swarm, show.expected_drones)
         abort_controller = FlightAbortController(swarm, show.expected_drones)
 
         def handle_sigint(signum: int, frame: FrameType | None) -> None:
@@ -209,7 +207,6 @@ def run_show(show: Show, swarm_module: Any, options: RunOptions | None = None) -
             print(f"Running cue {cue_number}/{len(show.cues)}: {cue.name}")
             sync = build_sync(cue, show.expected_drones, swarm_module)
             swarm.run(sync, type=cue.mode)
-            _check_for_crash_signal(swarm, show.expected_drones, crash_baseline, abort_controller)
             _sleep_interruptibly(cue.post_delay, abort_controller)
 
         if airborne and show.land_on_finish and not abort_controller.emergency_stop_triggered:
@@ -295,54 +292,3 @@ def _sleep_interruptibly(seconds: float, abort_controller: FlightAbortController
     while time.monotonic() < deadline:
         _raise_if_aborted(abort_controller)
         time.sleep(min(0.1, deadline - time.monotonic()))
-
-
-def _read_accident_counts(swarm: Any, expected_drones: int) -> list[int | None]:
-    counts: list[int | None] = []
-    for index in range(expected_drones):
-        try:
-            counts.append(int(swarm.run_drone(index, "get_accident_count")))
-        except Exception as exc:
-            print(f"Crash monitor: could not read drone {index} accident count: {exc!r}")
-            counts.append(None)
-    return counts
-
-
-def _check_for_crash_signal(
-    swarm: Any,
-    expected_drones: int,
-    accident_baseline: list[int | None],
-    abort_controller: FlightAbortController,
-) -> None:
-    if abort_controller.landing_requested or abort_controller.emergency_stop_triggered:
-        _raise_if_aborted(abort_controller)
-
-    for index in range(expected_drones):
-        try:
-            accident_count = int(swarm.run_drone(index, "get_accident_count"))
-            if accident_baseline[index] is not None and accident_count > accident_baseline[index]:
-                abort_controller.request_landing(f"drone {index} accident count increased")
-                raise GracefulLandingRequested
-            accident_baseline[index] = accident_count
-        except GracefulLandingRequested:
-            raise
-        except Exception as exc:
-            print(f"Crash monitor: could not read drone {index} accident count: {exc!r}")
-
-        if _looks_crashed_or_tipped(swarm, index):
-            abort_controller.request_landing(f"drone {index} appears tipped or down")
-            raise GracefulLandingRequested
-
-
-def _looks_crashed_or_tipped(swarm: Any, index: int) -> bool:
-    try:
-        angle_x = float(swarm.run_drone(index, "get_angle_x"))
-        angle_y = float(swarm.run_drone(index, "get_angle_y"))
-        height_cm = float(swarm.run_drone(index, "get_bottom_range", "cm"))
-    except Exception as exc:
-        print(f"Crash monitor: could not read drone {index} tilt/height: {exc!r}")
-        return False
-
-    severely_tilted = abs(angle_x) >= 65 or abs(angle_y) >= 65
-    very_low = 0 < height_cm <= 8
-    return severely_tilted and very_low

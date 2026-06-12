@@ -127,16 +127,51 @@ def test_rejects_long_hover_commands():
         )
 
 
-def test_rejects_old_flip_demo_commands():
-    with pytest.raises(ChoreographyError, match="not allowed"):
+def test_rejects_vertical_move_distance_commands():
+    with pytest.raises(ChoreographyError, match="throttle pulses for vertical movement"):
         parse_show(
             {
-                "title": "Flip",
+                "title": "Bad z move",
+                "expected_drones": 6,
+                "cues": [
+                    {
+                        "name": "z move",
+                        "commands": [{"drone": "all", "method": "move_distance", "args": [0, 0, 0.1, 0.35]}],
+                    }
+                ],
+            }
+        )
+
+
+def test_allows_explicit_flip_commands():
+    show = parse_show(
+        {
+            "title": "Flip",
+            "expected_drones": 6,
+            "cues": [
+                {
+                    "name": "flip",
+                    "commands": [{"drone": "all", "method": "flip", "args": ["back"]}],
+                }
+            ],
+        }
+    )
+
+    sync = build_sync(show.cues[0], show.expected_drones, FakeSwarmModule)
+
+    assert sync.sequences[0].commands == [("flip", ("back",), {})]
+
+
+def test_rejects_unknown_flip_direction():
+    with pytest.raises(ChoreographyError, match="invalid flip direction"):
+        parse_show(
+            {
+                "title": "Bad flip",
                 "expected_drones": 6,
                 "cues": [
                     {
                         "name": "flip",
-                        "commands": [{"drone": "all", "method": "flip", "args": ["back"]}],
+                        "commands": [{"drone": "all", "method": "flip", "args": ["diagonal"]}],
                     }
                 ],
             }

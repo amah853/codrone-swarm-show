@@ -13,6 +13,7 @@ MAX_HOVER_SECONDS = 0.6
 CM_PER_FOOT = 30.48
 
 ALLOWED_METHODS = {
+    "flip",
     "hover",
     "move",
     "move_backward",
@@ -210,12 +211,26 @@ def validate_axis_policy(show: Show) -> None:
 def validate_stability_policy(show: Show) -> None:
     for cue in show.cues:
         for command in cue.commands:
+            if command.method == "flip":
+                if len(command.args) != 1 or command.args[0] not in {"front", "back", "left", "right"}:
+                    raise ChoreographyError(
+                        f"cue '{cue.name}' uses invalid flip direction; use front, back, left, or right"
+                    )
             if command.method == "hover":
                 duration = _number_arg(command, 0, 0.0)
                 if duration > MAX_HOVER_SECONDS:
                     raise ChoreographyError(
                         f"cue '{cue.name}' uses hover duration {duration:g}, "
                         f"but CoDrone EDU swarm cues limit hover to {MAX_HOVER_SECONDS:g}s"
+                    )
+            if command.method == "move_distance":
+                if len(command.args) < 3:
+                    raise ChoreographyError("move_distance requires x, y, z, velocity args")
+                z_distance = _number_arg(command, 2, None)
+                if z_distance != 0:
+                    raise ChoreographyError(
+                        f"cue '{cue.name}' uses move_distance z={z_distance:g}, "
+                        "but CoDrone EDU swarm cues use throttle pulses for vertical movement"
                     )
 
 
