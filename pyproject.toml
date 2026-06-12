@@ -1,0 +1,24 @@
+[project]
+name = "drone-swarm-show"
+version = "0.1.0"
+description = "Four CoDrone EDU swarm show controller with emergency stop support."
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+dependencies = [
+  "codrone-edu==2.8",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+]
+
+[project.scripts]
+drone-swarm-show = "swarm_show.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["swarm_show*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
