@@ -88,6 +88,125 @@
       ]
     },
     {
+      "name": "dna helix rung one",
+      "commands": [
+        { "drone": 0, "method": "set_drone_LED", "args": [0, 180, 255, 255] },
+        { "drone": 1, "method": "set_drone_LED", "args": [255, 0, 180, 255] },
+        { "drone": 2, "method": "set_drone_LED", "args": [255, 0, 180, 255] },
+        { "drone": 3, "method": "set_drone_LED", "args": [0, 180, 255, 255] },
+        { "drone": 0, "method": "set_throttle", "args": [30] },
+        { "drone": 0, "method": "move", "args": [0.25] },
+        { "drone": 0, "method": "reset_move_values", "args": [] },
+        { "drone": 1, "method": "set_throttle", "args": [-20] },
+        { "drone": 1, "method": "move", "args": [0.20] },
+        { "drone": 1, "method": "reset_move_values", "args": [] },
+        { "drone": 2, "method": "set_throttle", "args": [-20] },
+        { "drone": 2, "method": "move", "args": [0.20] },
+        { "drone": 2, "method": "reset_move_values", "args": [] },
+        { "drone": 3, "method": "set_throttle", "args": [30] },
+        { "drone": 3, "method": "move", "args": [0.25] },
+        { "drone": 3, "method": "reset_move_values", "args": [] },
+        { "drone": "all", "method": "hover", "args": [0.20] }
+      ]
+    },
+    {
+      "name": "dna helix rung two",
+      "commands": [
+        { "drone": 0, "method": "set_drone_LED", "args": [255, 0, 180, 255] },
+        { "drone": 1, "method": "set_drone_LED", "args": [0, 180, 255, 255] },
+        { "drone": 2, "method": "set_drone_LED", "args": [0, 180, 255, 255] },
+        { "drone": 3, "method": "set_drone_LED", "args": [255, 0, 180, 255] },
+        { "drone": 0, "method": "set_throttle", "args": [-22] },
+        { "drone": 0, "method": "move", "args": [0.20] },
+        { "drone": 0, "method": "reset_move_values", "args": [] },
+        { "drone": 1, "method": "set_throttle", "args": [32] },
+        { "drone": 1, "method": "move", "args": [0.25] },
+        { "drone": 1, "method": "reset_move_values", "args": [] },
+        { "drone": 2, "method": "set_throttle", "args": [32] },
+        { "drone": 2, "method": "move", "args": [0.25] },
+        { "drone": 2, "method": "reset_move_values", "args": [] },
+        { "drone": 3, "method": "set_throttle", "args": [-22] },
+        { "drone": 3, "method": "move", "args": [0.20] },
+        { "drone": 3, "method": "reset_move_values", "args": [] },
+        { "drone": "all", "method": "hover", "args": [0.20] }
+      ]
+    },
+    {
+      "name": "dna base pair flash",
+      "commands": [
+        { "drone": 0, "method": "controller_buzzer", "args": [523, 90] },
+        { "drone": 0, "method": "set_drone_LED", "args": [0, 255, 160, 255] },
+        { "drone": 3, "method": "set_drone_LED", "args": [0, 255, 160, 255] },
+        { "drone": 1, "method": "set_drone_LED", "args": [255, 220, 0, 255] },
+        { "drone": 2, "method": "set_drone_LED", "args": [255, 220, 0, 255] },
+        { "drone": 0, "method": "hover", "args": [0.12] },
+        { "drone": 3, "method": "hover", "args": [0.12] },
+        { "drone": 1, "method": "controller_buzzer", "args": [659, 90] },
+        { "drone": 0, "method": "set_drone_LED", "args": [255, 220, 0, 255] },
+        { "drone": 3, "method": "set_drone_LED", "args": [255, 220, 0, 255] },
+        { "drone": 1, "method": "set_drone_LED", "args": [0, 255, 160, 255] },
+        { "drone": 2, "method": "set_drone_LED", "args": [0, 255, 160, 255] },
+        { "drone": 1, "method": "hover", "args": [0.12] },
+        { "drone": 2, "method": "hover", "args": [0.12] },
+        { "drone": "all", "method": "hover", "args": [0.18] }
+      ]
+    },
+    {
+      "name": "electric sparkle ladder",
+      "commands": [
+        { "drone": 0, "method": "set_drone_LED", "args": [255, 255, 255, 255] },
+        { "drone": 0, "method": "controller_buzzer", "args": [784, 70] },
+        { "drone": 0, "method": "set_throttle", "args": [24] },
+        { "drone": 0, "method": "move", "args": [0.16] },
+        { "drone": 0, "method": "reset_move_values", "args": [] },
+        { "drone": 1, "method": "hover", "args": [0.08] },
+        { "drone": 1, "method": "set_drone_LED", "args": [0, 255, 255, 255] },
+        { "drone": 1, "method": "set_throttle", "args": [24] },
+        { "drone": 1, "method": "move", "args": [0.16] },
+        { "drone": 1, "method": "reset_move_values", "args": [] },
+        { "drone": 2, "method": "hover", "args": [0.16] },
+        { "drone": 2, "method": "set_drone_LED", "args": [255, 255, 255, 255] },
+        { "drone": 2, "method": "set_throttle", "args": [24] },
+        { "drone": 2, "method": "move", "args": [0.16] },
+        { "drone": 2, "method": "reset_move_values", "args": [] },
+        { "drone": 3, "method": "hover", "args": [0.24] },
+        { "drone": 3, "method": "set_drone_LED", "args": [0, 255, 255, 255] },
+        { "drone": 3, "method": "set_throttle", "args": [24] },
+        { "drone": 3, "method": "move", "args": [0.16] },
+        { "drone": 3, "method": "reset_move_values", "args": [] },
+        { "drone": "all", "method": "hover", "args": [0.18] }
+      ]
+    },
+    {
+      "name": "mirror corkscrew flip accents",
+      "commands": [
+        { "drone": 0, "method": "set_drone_LED", "args": [255, 80, 0, 255] },
+        { "drone": 1, "method": "set_drone_LED", "args": [0, 120, 255, 255] },
+        { "drone": 2, "method": "set_drone_LED", "args": [0, 120, 255, 255] },
+        { "drone": 3, "method": "set_drone_LED", "args": [255, 80, 0, 255] },
+        { "drone": 0, "method": "flip", "args": ["left"] },
+        { "drone": 1, "method": "flip", "args": ["right"] },
+        { "drone": 2, "method": "flip", "args": ["right"] },
+        { "drone": 3, "method": "flip", "args": ["left"] },
+        { "drone": "all", "method": "hover", "args": [0.25] }
+      ]
+    },
+    {
+      "name": "breathing neon elevator",
+      "commands": [
+        { "drone": "all", "method": "set_drone_LED", "args": [80, 0, 255, 255] },
+        { "drone": "all", "method": "set_throttle", "args": [26] },
+        { "drone": "all", "method": "move", "args": [0.22] },
+        { "drone": "all", "method": "reset_move_values", "args": [] },
+        { "drone": "all", "method": "hover", "args": [0.18] },
+        { "drone": "all", "method": "set_drone_LED", "args": [0, 255, 120, 255] },
+        { "drone": "all", "method": "set_throttle", "args": [-22] },
+        { "drone": "all", "method": "move", "args": [0.20] },
+        { "drone": "all", "method": "reset_move_values", "args": [] },
+        { "drone": "all", "method": "hover", "args": [0.20] }
+      ]
+    },
+    {
       "name": "short vertical finish pulse",
       "commands": [
         { "drone": "all", "method": "set_throttle", "args": [25] },
